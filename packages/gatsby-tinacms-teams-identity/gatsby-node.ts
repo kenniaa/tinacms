@@ -17,15 +17,43 @@ limitations under the License.
 */
 
 import { Application } from 'express'
+import jwtDecode from 'jwt-decode'
 
 exports.onCreateDevServer = ({ app }: { app: Application }) => {
   console.log('Add Thingy')
-  app.use('/___tina', (req, res, next) => {
-    console.log('TEAMS MIDDLEWARE')
+  app.use('/___tina', async (req, res, next) => {
+    // TODO: Get from request
+    const encodedToken = ''
+
+    const user: TinaTeamsUser = jwtDecode(encodedToken)
+
+    await validateUser(user)
+
     // @ts-ignore
     req.user = {
-      name: 'User Stub',
+      name: user.name,
+      email: user.email,
     }
     next()
   })
+}
+
+interface TinaTeamsUser {
+  iss: string
+  sub: string
+  aud: string
+  exp: number
+  iat: number
+  at_hash: string
+  email: string
+  email_verified: boolean
+  name: string
+  federated_claims: {
+    connector_id: string
+    user_id: string
+  }
+}
+
+async function validateUser(user: TinaTeamsUser) {
+  // TODO: throw if not valid
 }
