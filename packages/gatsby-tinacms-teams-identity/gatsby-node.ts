@@ -18,13 +18,13 @@ limitations under the License.
 
 import { Application } from 'express'
 import jwtDecode from 'jwt-decode'
+import cookieParser from 'cookie-parser'
 
 exports.onCreateDevServer = ({ app }: { app: Application }) => {
-  console.log('Add Thingy')
+  app.use(cookieParser())
   app.use('/___tina', async (req, res, next) => {
     // TODO: Get from request
-    const encodedToken = ''
-
+    const encodedToken = req.cookies['io']
     const user: TinaTeamsUser = jwtDecode(encodedToken)
 
     await validateUser(user)
