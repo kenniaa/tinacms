@@ -94,6 +94,7 @@ export function router(config: GitRouterConfig = {}) {
   })
 
   router.put('/:relPath', (req: any, res: any) => {
+    console.log('User', req.user)
     const fileRelativePath = decodeURIComponent(req.params.relPath)
     const fileAbsolutePath = path.join(CONTENT_ABSOLUTE_PATH, fileRelativePath)
 
@@ -143,11 +144,13 @@ export function router(config: GitRouterConfig = {}) {
         path.join(CONTENT_ABSOLUTE_PATH, rel)
       )
 
+      const user = req.user || {}
+
       // TODO: Separate commit and push???
       await commit({
         pathRoot: REPO_ABSOLUTE_PATH,
-        name: req.body.name || config.defaultCommitName,
-        email: req.body.email || config.defaultCommitEmail,
+        name: req.user.name || req.body.name || config.defaultCommitName,
+        email: req.user.email || req.body.email || config.defaultCommitEmail,
         push: PUSH_ON_COMMIT,
         message,
         files,
