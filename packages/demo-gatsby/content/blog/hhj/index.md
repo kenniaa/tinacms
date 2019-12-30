@@ -6,7 +6,5 @@ description: No on prop 3984
 gallery: []
 draft: false
 thumbnail: ./sunet.jpg
-fakeAuthor:
-  name: Kenia
 ---
 # hhj
