@@ -8,7 +8,5 @@ draft: false
 thumbnail: ./sunet.jpg
 fakeAuthor:
   name: Kenia
-  social:
-    twitter: kenia
 ---
 # hhj
